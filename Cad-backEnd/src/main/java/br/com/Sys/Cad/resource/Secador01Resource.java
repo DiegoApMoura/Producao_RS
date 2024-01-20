@@ -1,6 +1,7 @@
 package br.com.Sys.Cad.resource;
 
 import br.com.Sys.Cad.Entities.Secador01;
+import br.com.Sys.Cad.dto.Secador01DTO;
 import br.com.Sys.Cad.services.Secador01Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class Secador01Resource {
     private Secador01Service service;
 
     @GetMapping
-    public ResponseEntity <List<Secador01>> findAll(){
-        List<Secador01> list = service.findAll();
+    public ResponseEntity <List<Secador01DTO>> findAll(){
+        List<Secador01DTO> list = service.findAll();
         //String data  = new SimpleDateFormat("DD/MM/YYYY HH:mm:ss").format(new Date());
        // list.add(new Secador01(1L, "12", "10", data));
 
