@@ -6,6 +6,7 @@ import br.com.Sys.Cad.services.Secador01Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,12 +22,22 @@ public class Secador01Resource {
     @Autowired
     private Secador01Service service;
 
-    @GetMapping
+    @GetMapping(value = "buscaTodos")
     public ResponseEntity <List<Secador01DTO>> findAll(){
         List<Secador01DTO> list = service.findAll();
         //String data  = new SimpleDateFormat("DD/MM/YYYY HH:mm:ss").format(new Date());
-       // list.add(new Secador01(1L, "12", "10", data));
+        // list.add(new Secador01(1L, "12", "10", data));
+
+        return  ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping(value = "buscaId/{id}")
+    public ResponseEntity <List<Secador01DTO>> finById(@PathVariable Long id){
+        List<Secador01DTO> list = service.findById(id);
+
 
         return  ResponseEntity.ok().body(list);
     }
 }
+//String data  = new SimpleDateFormat("DD/MM/YYYY HH:mm:ss").format(new Date());
+// list.add(new Secador01(1L, "12", "10", data));
