@@ -3,12 +3,14 @@ package br.com.Sys.Cad.services;
 import br.com.Sys.Cad.Entities.Secador01;
 import br.com.Sys.Cad.dto.Secador01DTO;
 import br.com.Sys.Cad.repositories.Secador01Repository;
+import br.com.Sys.Cad.services.exceptions.DataBaseNotFoundExceptionRS;
 import br.com.Sys.Cad.services.exceptions.EntityNotFoundExceptionRS;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,9 +30,10 @@ public class Secador01Service {
     }
 
     @Transactional(readOnly = true)
-    public List<Secador01DTO> findById(Long id){
+    public Secador01DTO findById(Long id){
         Optional<Secador01> obj = repository.findById(id);
-        return obj.stream().map(x -> new Secador01DTO(x)).collect(Collectors.toList());
+        Secador01 entity = obj.orElseThrow(() -> new EntityNotFoundExceptionRS("Entidade não encontrada!"));
+        return new Secador01DTO(entity);
     }
 
     @Transactional
@@ -58,4 +61,14 @@ public class Secador01Service {
 
     }
 
+    public void delete(Long id) {
+        try {
+            repository.deleteById(id);
+        }catch (EmptyResultDataAccessException e){
+            throw new EntityNotFoundExceptionRS("ID "+id+" não encontrado!");
+        }catch (DataIntegrityViolationException e){
+            throw new DataBaseNotFoundExceptionRS("Violação de integridade dos dados!");
+
+        }
+    }
 }

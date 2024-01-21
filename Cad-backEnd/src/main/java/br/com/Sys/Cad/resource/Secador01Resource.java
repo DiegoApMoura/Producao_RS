@@ -31,9 +31,10 @@ public class Secador01Resource {
     }
 
     @GetMapping(value = "buscarId/{id}")
-    public ResponseEntity <List<Secador01DTO>> finById(@PathVariable Long id){
-        List<Secador01DTO> list = service.findById(id);
-        return  ResponseEntity.ok().body(list);
+    public ResponseEntity <Secador01DTO> finById(@PathVariable Long id){
+
+        Secador01DTO dto = service.findById(id);
+        return  ResponseEntity.ok().body(dto);
     }
     @PostMapping(value = "/salvar")
     public ResponseEntity<Secador01DTO>insert(@RequestBody Secador01DTO dto){
@@ -47,6 +48,15 @@ public class Secador01Resource {
         dto = service.update(id, dto);
         return  ResponseEntity.ok().body(dto);
     }
+
+    @DeleteMapping(value = "/deletar/{id}")
+    public ResponseEntity<Void>delete(@PathVariable Long id){
+        service.delete(id);
+        return  ResponseEntity.noContent().build();
+    }
+
+
+
 
 
 }
