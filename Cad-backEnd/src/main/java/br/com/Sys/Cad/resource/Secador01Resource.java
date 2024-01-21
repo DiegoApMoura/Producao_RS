@@ -5,11 +5,10 @@ import br.com.Sys.Cad.dto.Secador01DTO;
 import br.com.Sys.Cad.services.Secador01Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,10 +33,15 @@ public class Secador01Resource {
     @GetMapping(value = "buscaId/{id}")
     public ResponseEntity <List<Secador01DTO>> finById(@PathVariable Long id){
         List<Secador01DTO> list = service.findById(id);
-
-
         return  ResponseEntity.ok().body(list);
     }
+    @PostMapping(value = "/salvar")
+    public ResponseEntity<Secador01DTO>insert(@RequestBody Secador01DTO dto){
+        dto = service.insert(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+        return  ResponseEntity.created(uri).body(dto);
+    }
+
 }
 //String data  = new SimpleDateFormat("DD/MM/YYYY HH:mm:ss").format(new Date());
 // list.add(new Secador01(1L, "12", "10", data));

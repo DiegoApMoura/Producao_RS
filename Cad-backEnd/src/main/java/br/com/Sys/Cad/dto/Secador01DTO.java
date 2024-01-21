@@ -12,7 +12,7 @@ public class Secador01DTO  implements Serializable {
     private String perca;
     private String data;
 
-    public Secador01DTO(){
+    public Secador01DTO(Object x){
 
     }
 

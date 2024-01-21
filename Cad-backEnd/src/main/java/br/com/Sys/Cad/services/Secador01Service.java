@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,9 +29,17 @@ public class Secador01Service {
     @Transactional(readOnly = true)
     public List<Secador01DTO> findById(Long id){
         Optional<Secador01> obj = repository.findById(id);
-        Secador01 entity = obj.orElseThrow(() -> new EntityNotFoundExceptionRS("Registro não encontrado!"));
-        return (List<Secador01DTO>) new Secador01DTO(entity);
+        return obj.stream().map(x -> new Secador01DTO(x)).collect(Collectors.toList());
     }
 
+    @Transactional
+    public Secador01DTO insert(Secador01DTO dto) {
+        Secador01 entity = new Secador01();
+        entity.setUmidade(dto.getUmidade());
+        entity.setPerca(dto.getPerca());
+        entity.setData(new SimpleDateFormat("DD/MM/YYYY HH:mm:ss").format(new Date()));
+        entity=repository.save(entity);
+        return new Secador01DTO(entity);
 
+    }
 }
