@@ -30,7 +30,7 @@ public class Secador01Resource {
         return  ResponseEntity.ok().body(list);
     }
 
-    @GetMapping(value = "buscaId/{id}")
+    @GetMapping(value = "buscarId/{id}")
     public ResponseEntity <List<Secador01DTO>> finById(@PathVariable Long id){
         List<Secador01DTO> list = service.findById(id);
         return  ResponseEntity.ok().body(list);
@@ -42,6 +42,11 @@ public class Secador01Resource {
         return  ResponseEntity.created(uri).body(dto);
     }
 
+    @PutMapping(value = "/atualizar/{id}")
+    public ResponseEntity<Secador01DTO>update(@PathVariable Long id, @RequestBody Secador01DTO dto){
+        dto = service.update(id, dto);
+        return  ResponseEntity.ok().body(dto);
+    }
+
+
 }
-//String data  = new SimpleDateFormat("DD/MM/YYYY HH:mm:ss").format(new Date());
-// list.add(new Secador01(1L, "12", "10", data));

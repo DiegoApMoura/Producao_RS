@@ -4,6 +4,7 @@ import br.com.Sys.Cad.Entities.Secador01;
 import br.com.Sys.Cad.dto.Secador01DTO;
 import br.com.Sys.Cad.repositories.Secador01Repository;
 import br.com.Sys.Cad.services.exceptions.EntityNotFoundExceptionRS;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,4 +43,19 @@ public class Secador01Service {
         return new Secador01DTO(entity);
 
     }
+    @Transactional
+    public Secador01DTO update(Long id, Secador01DTO dto) {
+        try {
+            Secador01 entity = repository.getReferenceById(id);
+            entity.setUmidade(dto.getUmidade());
+            entity.setPerca(dto.getPerca());
+            entity = repository.save(entity);
+            return new Secador01DTO(entity);
+
+        }catch (EntityNotFoundException e){
+            throw new EntityNotFoundExceptionRS("ID não encontrado!");
+        }
+
+    }
+
 }
