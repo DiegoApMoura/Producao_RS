@@ -3,7 +3,7 @@ package br.com.Sys.Cad.services;
 import br.com.Sys.Cad.Entities.Secador01;
 import br.com.Sys.Cad.dto.Secador01DTO;
 import br.com.Sys.Cad.repositories.Secador01Repository;
-import br.com.Sys.Cad.services.exceptions.DataBaseNotFoundExceptionRS;
+import br.com.Sys.Cad.services.exceptions.DatabaseExceptionRS;
 import br.com.Sys.Cad.services.exceptions.EntityNotFoundExceptionRS;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class Secador01Service {
         }catch (EmptyResultDataAccessException e){
             throw new EntityNotFoundExceptionRS("ID "+id+" não encontrado!");
         }catch (DataIntegrityViolationException e){
-            throw new DataBaseNotFoundExceptionRS("Violação de integridade dos dados!");
+            throw new DatabaseExceptionRS("Violação de integridade dos dados!");
 
         }
     }

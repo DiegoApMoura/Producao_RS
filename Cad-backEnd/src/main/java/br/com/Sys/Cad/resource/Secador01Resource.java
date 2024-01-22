@@ -21,35 +21,32 @@ public class Secador01Resource {
     @Autowired
     private Secador01Service service;
 
-    @GetMapping(value = "buscaTodos")
+    @GetMapping(value = "buscarTodosS01")
     public ResponseEntity <List<Secador01DTO>> findAll(){
         List<Secador01DTO> list = service.findAll();
-        //String data  = new SimpleDateFormat("DD/MM/YYYY HH:mm:ss").format(new Date());
-        // list.add(new Secador01(1L, "12", "10", data));
-
         return  ResponseEntity.ok().body(list);
     }
 
-    @GetMapping(value = "buscarId/{id}")
+    @GetMapping(value = "buscarIdS01/{id}")
     public ResponseEntity <Secador01DTO> finById(@PathVariable Long id){
 
         Secador01DTO dto = service.findById(id);
         return  ResponseEntity.ok().body(dto);
     }
-    @PostMapping(value = "/salvar")
+    @PostMapping(value = "/salvarS01")
     public ResponseEntity<Secador01DTO>insert(@RequestBody Secador01DTO dto){
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return  ResponseEntity.created(uri).body(dto);
     }
 
-    @PutMapping(value = "/atualizar/{id}")
+    @PutMapping(value = "/atualizarS01/{id}")
     public ResponseEntity<Secador01DTO>update(@PathVariable Long id, @RequestBody Secador01DTO dto){
         dto = service.update(id, dto);
         return  ResponseEntity.ok().body(dto);
     }
 
-    @DeleteMapping(value = "/deletar/{id}")
+    @DeleteMapping(value = "/deletarS01/{id}")
     public ResponseEntity<Void>delete(@PathVariable Long id){
         service.delete(id);
         return  ResponseEntity.noContent().build();

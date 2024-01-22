@@ -1,6 +1,6 @@
 package br.com.Sys.Cad.resource.exceptions;
 
-import br.com.Sys.Cad.services.exceptions.DataBaseNotFoundExceptionRS;
+import br.com.Sys.Cad.services.exceptions.DatabaseExceptionRS;
 import br.com.Sys.Cad.services.exceptions.EntityNotFoundExceptionRS;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -12,8 +12,8 @@ import java.time.Instant;
 
 @ControllerAdvice
 public class ResourceExceptionHandlerRS {
-    @ExceptionHandler(DataBaseNotFoundExceptionRS.class)
-    public ResponseEntity<StandardErrorRS>database(DataBaseNotFoundExceptionRS e, HttpServletRequest request){
+    @ExceptionHandler(DatabaseExceptionRS.class)
+    public ResponseEntity<StandardErrorRS>database(DatabaseExceptionRS e, HttpServletRequest request){
         StandardErrorRS err = new StandardErrorRS();
         err.setTimestamp(Instant.now());
         err.setStatus(HttpStatus.BAD_REQUEST.value());
